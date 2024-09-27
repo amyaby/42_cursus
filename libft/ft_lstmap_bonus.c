@@ -6,16 +6,35 @@
 /*   By: iabasala <iabasala@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 08:31:05 by iabasala          #+#    #+#             */
-/*   Updated: 2024/09/26 18:57:31 by im_ane           ###   ########.fr       */
+/*   Updated: 2024/09/27 11:02:41 by iabasala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+#include "libft.h"
+
+// Function to append a node to the list
+void	ft_lstadd_back(t_list **lst, t_list *new_node)
+{
+	t_list *temp;
+
+	if (!lst || !new_node)
+		return;
+	if (!*lst)
+		*lst = new_node;
+	else
+	{
+		temp = *lst;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_node;
+	}
+}
+
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*new_node;
-	t_list	*temp;
 	t_list	*new_lst;
 
 	new_lst = NULL;
@@ -31,15 +50,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		}
 		new_node->content = f(lst->content);
 		new_node->next = NULL;
-		if (!new_lst)
-			new_lst = new_node;
-		else
-		{
-			temp = new_lst;
-			while (temp->next)
-				temp = temp->next;
-			temp->next = new_node;
-		}
+		ft_lstadd_back(&new_lst, new_node); // Use helper function to add the new node
 		lst = lst->next;
 	}
 	return (new_lst);

@@ -52,7 +52,7 @@ void	print_list(t_list *lst)
 	printf("NULL\n");
 }
 
-int main()
+int	main(void)
 {
     t_list *list = NULL;
     
