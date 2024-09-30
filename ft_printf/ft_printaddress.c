@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printaddress.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: im_ane <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: iabasala <iabasala@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 01:05:07 by im_ane            #+#    #+#             */
-/*   Updated: 2024/08/09 01:05:12 by im_ane           ###   ########.fr       */
+/*   Updated: 2024/09/27 14:01:05 by iabasala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "ft_printf.h"
+
 int	ft_printaddress(unsigned long n)
 {
 	int		i;
-	char	str[];
+	char	*str;
 
-	str[] = "0123456789abcdef";
+	str = "0123456789abcdef";
 	i = 0;
 	if (n < 16)
 		i += ft_putchar(str[n]);

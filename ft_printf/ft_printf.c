@@ -6,7 +6,7 @@
 /*   By: iabasala <iabasala@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:38:01 by im_ane            #+#    #+#             */
-/*   Updated: 2024/09/26 23:05:50 by iabasala         ###   ########.fr       */
+/*   Updated: 2024/09/30 00:53:18 by iabasala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	ft_cases(const char *format, va_list args)
 	int	print_char;
 
 	print_char = 0;
-	if (*format == '\0')
-		return (0);
 	if (*format == '%')
 		print_char += ft_putchar('%');
 	else if (*format == 'c')
@@ -37,9 +35,6 @@ int	ft_cases(const char *format, va_list args)
 	else if (*format == 'x')
 		print_char += ft_printhex(va_arg(args, unsigned int),
 				"0123456789abcdef");
-	else if (*format == 'X')
-		print_char += ft_printhex(va_arg(args, unsigned int),
-				"0123456789ABCDEF");
 	return (print_char);
 }
 
@@ -62,7 +57,7 @@ int	ft_print(const char *format, ...)
 		else
 		{
 			format++;
-			print_char += ft_cases((const char *)*format, args);
+			print_char += ft_cases(format, args);
 		}
 		format++;
 	}
