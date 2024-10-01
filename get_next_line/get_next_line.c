@@ -118,12 +118,13 @@ int main()
 {
     int fd;
     char *line;
-    int i = 1;
     
-    fd = open("file", O_RDONLY);
-    while (i > 0)
+    fd = open("file.txt", O_RDONLY);
+    char *txt = "halawah zdi lawah\nla ilaaha ila allah\nalhamdolialla\n";
+    ssize_t written_bytes = write(fd,txt,strlen(txt));
+    while (1)
     {
-        i = get_next_line(fd);
+        get_next_line(fd);
         printf("line = %s\n", line);
     }
     close(fd);
