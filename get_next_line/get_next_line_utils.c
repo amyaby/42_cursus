@@ -1,118 +1,120 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iabasala <iabasala@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/05 21:17:19 by iabasala          #+#    #+#             */
+/*   Updated: 2024/10/11 04:58:10 by iabasala         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-char    *ft_strchr(const char *str, int c)
+char	*ft_strchr(const char *str, int c)
 {
-        size_t  i;
-
-        i = 0;
-        while (str[i])
-        {
-                if ((unsigned char)str[i] == (unsigned char)c)
-                {
-                        return ((char *)str + i);
-                }
-                i++;
-        }
-        if ((unsigned char)str[i] == (unsigned char)c)
-        {
-                return ((char *)(str + i));
-        }
-        return (NULL);
+ while (*str)
+    {
+        if (*str == (char)c)
+            return (char *)str;
+        str++;
+    }
+    if (*str == (char)c) // Check if 'c' is the null terminator
+        return (char *)str;
+    return (NULL);
 }
-size_t  ft_strlen(const char *str)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-        size_t  i;
-
-        i = 0;
-        while (str[i])
-        {
-                i++;
-        }
-        return (i);
-}
-/*char *ft_strncpy(char *dest, const char *src, size_t n) 
-{
+    unsigned char *d = (unsigned char *)dest;
+    const unsigned char *s = (const unsigned char *)src;
     size_t i;
-    i  = 0;
 
-    while( i < n && src[i] != '\0') 
-    {
-        dest[i] = src[i];
-        i++;
-    }
+    if (!dest || !src)
+        return (NULL);
+    if (dest == src)
+        return dest;
 
-    while (i < n) 
-    {
-        dest[i] = '\0';
-    }
+    for (i = 0; i < n; i++)
+        d[i] = s[i];
 
     return dest;
-}*/
-char	*ft_strdup(const char *str)
+}
+char *ft_strdup(const char *str)
 {
-	char	*dup;
+    char    *dup;
+    size_t  len;
 
-	dup = malloc((ft_strlen(str) + 1) * sizeof(char));
-	if (!dup)
+    len = ft_strlen(str) + 1;
+    dup = (char *)malloc(len);
+    if (dup == NULL)
+        return (NULL);
+    ft_memcpy(dup, str, len);
+    return (dup);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		i++;
+	}
+	return (i);
+}
+char *ft_strjoin(char const *s1, char const *s2)
+{
+    char *str;
+    size_t i = 0, j = 0;
+    size_t len1 = 0;
+    size_t len2 = 0;
+
+    if(!s1 && !s2)
+        return NULL;
+    if (s1)
+        len1 = ft_strlen(s1);
+    if (s2)
+        len2 = ft_strlen(s2);
+    str = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
+    if (!str)
+        return (NULL);
+    while (i < len1)
+    {
+        str[i] = s1[i];
+        i++;
+    }
+    while (j < len2)
+    {
+        str[i + j] = s2[j];
+        j++;
+    }
+    str[i + j] = '\0';
+
+    return str;
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*sub_string;
+
+	i = 0;
+	if (!s)
 		return (NULL);
-	ft_memcpy(dup, str, ft_strlen(str) + 1);
-	return (dup);
-}
-char	*ft_strcpy(char *dest, char *src)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (src[i] != '\0')
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	sub_string = (char *)malloc((len + 1) * sizeof(char));
+	if (!sub_string)
+		return (NULL);
+	while (i < len && s[start + i])
 	{
-		dest[i] = src[i];
+		sub_string[i] = s[start + i];
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
-}
-int	len(char *str)
-{
-	int	l;
-
-	l = 0;
-	while (str[l] != '\0')
-	{
-		l++;
-	}
-	return (l);
-}
-
-char	*ft_strcat(char *dest, char *src)
-{
-	int	i;
-	int	dest_len;
-
-	i = 0;
-	dest_len = len(dest);
-	while (src[i] != '\0')
-	{
-		dest[dest_len + i] = src[i];
-		i++;
-	}
-	dest[dest_len + i] = '\0';
-	return (dest);
-}
-void    *ft_memcpy(void *dest, const void *src, size_t n)
-{
-        unsigned char    *dest_ptr;
-        unsigned char    *src_ptr;
-        size_t            i;
-
-        if (!dest && !src)
-                return (NULL);
-        dest_ptr = (unsigned char *)dest;
-        src_ptr = (unsigned char *)src;
-        i = 0;
-        while (i < n)
-        {
-                dest_ptr[i] = src_ptr[i];
-                i++;
-        }
-        return (dest);
+	sub_string[len] = '\0';
+	return (sub_string);
 }
