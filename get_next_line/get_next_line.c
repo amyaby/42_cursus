@@ -6,12 +6,18 @@
 /*   By: iabasala <iabasala@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 02:39:35 by iabasala          #+#    #+#             */
-/*   Updated: 2024/10/11 05:50:37 by iabasala         ###   ########.fr       */
+/*   Updated: 2024/10/12 11:01:24 by iabasala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/*char *free(char *leftover,char *temp)
+{
+    free(leftover);
+        leftover = temp;
+        return leftover;
+}*/
 char *read_and_concat(int fd, char *leftover)
 {
     int read_bytes;
@@ -35,6 +41,7 @@ char *read_and_concat(int fd, char *leftover)
         temp = ft_strjoin(leftover, buff);
         free(leftover);
         leftover = temp;
+// leftover = free_and_return(leftover, temp);
         if (!leftover)
         {
             free(buff);
@@ -86,43 +93,6 @@ while (leftover[i] && leftover[i] != '\n')
     str = ft_strdup(leftover + i);
     free(leftover);
     return str;
-}
-
-char	*get_next_line(int fd)
-{
-	char		*line;
-	static char	*leftover =  NULL;
-
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd,0,0) < 0)
-	{
-		 free(leftover);
-        leftover = NULL;
-        return (NULL);
-	}
-	leftover = read_and_concat(fd, leftover);
-	if (!leftover)
-		return (NULL);
-	line = extract_line(leftover);
-	leftover = new_leftover(leftover);
-	return (line);
-}
-char *get_next_line(int fd)
-{
-    char        *line;
-    static char *leftover = NULL;
-
-    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-    {
-        free(leftover);
-        leftover = NULL;
-        return (NULL);
-    }
-    leftover = read_and_concat(fd, leftover);
-    if (!leftover)
-        return NULL;
-    line = extract_line(leftover);
-    leftover = new_leftover(leftover);
-    return (line);
 }
 
 int    main(void)
